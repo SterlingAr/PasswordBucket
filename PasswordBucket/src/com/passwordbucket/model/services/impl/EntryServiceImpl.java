@@ -65,6 +65,14 @@ public class EntryServiceImpl implements EntryService {
 	public void deleteAllEntries(EntryList list) {
 		entryRepository.deleteAllEntries(list);
 	}
+
+	@Override
+	public void modifyEntry(Entry entry) {
+		
+		entryRepository.modifyEntry(entry);
+		
+	}
+	
 	
 	
 

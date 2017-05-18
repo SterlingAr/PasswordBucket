@@ -31,6 +31,6 @@ public interface EntryRepository {
 
 	void deleteAllEntries(EntryList entryList);
 
-	void modifyEntry(Entry entry, EntryList entryList);
+	void modifyEntry(Entry entry);
 
 }
