@@ -4,13 +4,22 @@
 http://amoffat.github.io/sh/sections/asynchronous_execution.html
 https://www.cyberciti.biz/faq/python-execute-unix-linux-command-examples/
 Created on Fri May 19 12:47:56 2017
-
 @author: marius
 """
 import sh
 import os
 from sh import xrandr
+from sh import cvt
+import sys
+print(sys.argv)
+
+var=input("Introduce algo: ")
+print(var)
 # uso una funcion para salvaguardar la resolución en uso
+
+
+
+
 
 def storeCurrentResolution():
     
@@ -20,30 +29,57 @@ def storeCurrentResolution():
     Yaxis = os.popen("xrandr --current | grep '*' | uniq | awk '{print $1}' | cut -d 'x' -f2")
     readYaxis = Yaxis.read()
     
-    resolutionBackup = str(readXaxis)+"x"+str(readYaxis)
-    return resolutionBackup
+    resolutionBackup = readXaxis+"x"+readYaxis
+    return resolutionBackup.replace("\n","")
 
-storeCurrentResolution()
-    
     
 #uso esta función para revertir los cambios
 def revertChanges(resolutionBackup):
     
-    xrandr("-s", resolutionBackup)
+    xrandr("-s",resolutionBackup)
+    
     
 
+def listConnectedDisplays():
     
-    
-   
+    connectedDisplays=os.popen("xrandr | grep -w connected  | awk -F'[ +]' '{print $1}'")
+    readDisplays = connectedDisplays.read()
+    return readDisplays.split()#devuelve como lista
 
+
+
+def genNewModline(width,height,selectedDisplay):
+    
+   fullModline =os.popen("cvt "+str(width)+" "+str(height))
+   readModline = fullModline.read().split("Modeline ",1)[1]
+   os.system("xrandr --newmode "+readModline)
+   os.system("xrandr --addmode "+selectedDisplay+" "+readModline.split()[0])
+   print(readModline)
+
+    
+
+##logica de control
+resolutionBackup = storeCurrentResolution()
+
+userInput = input("Introduce la resolución en el siguiente formato  1440 900: \n")
+
+listInput = userInput.split()
+
+if len(listInput) > 0 :
+    
+    listDisplays = listConnectedDisplays()
+    print("Selecciona una pantalla:\n")
+    for i in range(0,len(listDisplays)):
+        print(str(i)+". "+listDisplays[i])
+    selectedDisplay = int(input("\nIntroduce: "))
+    
+    if selectedDisplay >= 0 and selectedDisplay <= len(listDisplays)-1:
+        print("Continue")
+       
+else:
+    print("no has introducido nada")
+
+print(listInput)
 
 def changeResolution():
     return Null
-
-
-
-
-resolution = os.popen("cvt 1440 900")
-
-data = resolution.read()
-print(data)
