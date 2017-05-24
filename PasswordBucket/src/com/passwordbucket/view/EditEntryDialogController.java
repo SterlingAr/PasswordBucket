@@ -129,6 +129,7 @@ public class EditEntryDialogController {
 			e.setId(entry.getId());
 			e.setPassword(encrypt.encryptPassword(e.getPassword()));
 			entryService.modifyEntry(e);
+			dialogStage.close();
 			
 			
 		} else {
