@@ -20,6 +20,7 @@ public interface EntryService {
 	
 	void deleteAllEntries(EntryList list);
 	
+	void modifyEntry(Entry entry);
 	
 	
 	

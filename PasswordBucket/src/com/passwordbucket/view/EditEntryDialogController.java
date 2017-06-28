@@ -2,7 +2,11 @@ package com.passwordbucket.view;
 
 import com.passwordbucket.MainApp;
 import com.passwordbucket.model.domain.Entry;
+import com.passwordbucket.model.services.EncryptionService;
+import com.passwordbucket.model.services.EntryService;
 import com.passwordbucket.model.services.PasswordServices;
+import com.passwordbucket.model.services.impl.EncryptionServiceImpl;
+import com.passwordbucket.model.services.impl.EntryServiceImpl;
 import com.passwordbucket.model.services.impl.PasswordServicesImpl;
 import com.passwordbucket.model.validators.EntryValidator;
 
@@ -32,7 +36,8 @@ public class EditEntryDialogController {
 	private MainApp mainApp;
 	private PasswordServices passwordServices;
 	private EntryValidator entryValidator;
-
+	private EntryService entryService;
+	private EncryptionService encrypt;
 	@FXML
 	private void initialize() {
 	
@@ -109,12 +114,23 @@ public class EditEntryDialogController {
 	@FXML
 	private void handleOk() {
 		entryValidator = new EntryValidator();
+		entryService = new EntryServiceImpl();
+		encrypt = new EncryptionServiceImpl();
+		
 		Entry e = new Entry(entryURL.getText(), entryUsername.getText(), entryPassword.getText());
 
 		if (entryValidator.validateEntryObject(e)) {
+			
+			
 			entry.setSite(entryURL.getText());
 			entry.setUser(entryUsername.getText());
 			entry.setPassword(entryPassword.getText());
+			
+			e.setId(entry.getId());
+			e.setPassword(encrypt.encryptPassword(e.getPassword()));
+			entryService.modifyEntry(e);
+			dialogStage.close();
+			
 			
 		} else {
 

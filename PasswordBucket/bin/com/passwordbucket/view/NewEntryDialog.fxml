@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
@@ -38,6 +40,15 @@
                </children>
             </HBox>
             <TextField fx:id="entryPassword" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label fx:id="passwordStrengthMeter" alignment="CENTER_RIGHT" prefHeight="21.0" prefWidth="104.0" styleClass="label-bright" text="Strength" GridPane.columnIndex="2" GridPane.rowIndex="2">
+               <effect>
+                  <Glow>
+                     <input>
+                        <Bloom />
+                     </input>
+                  </Glow>
+               </effect>
+            </Label>
          </children>
       </GridPane>
    </children>

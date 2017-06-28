@@ -34,11 +34,12 @@ public class EntriesInMemory implements EntryRepository {
 			ResultSet rset = preparedStatement.executeQuery();
 
 			while (rset.next()) {
-				
-			
-				
+
 				Entry entry = new Entry(rset.getString("site"), rset.getString("username"), rset.getString("password"),
-						UUID.fromString(rset.getString("id_entry")),//convert to UUID object
+						UUID.fromString(rset.getString("id_entry")), // convert
+																		// to
+																		// UUID
+																		// object
 						UUID.fromString(rset.getString("id_list")));
 
 				entryList.add(entry);
@@ -74,7 +75,7 @@ public class EntriesInMemory implements EntryRepository {
 				String passwd = rset.getString("password");
 				UUID id_list = UUID.fromString(rset.getString("id_list"));
 
-				entry = new Entry(site,user,passwd, idEntry, id_list);
+				entry = new Entry(site, user, passwd, idEntry, id_list);
 
 			}
 
@@ -108,7 +109,7 @@ public class EntriesInMemory implements EntryRepository {
 				String passwd = rset.getString("password");
 				UUID id_list = UUID.fromString(rset.getString("id_list"));
 
-				entry = new Entry(site,user,passwd, idEntry, id_list);
+				entry = new Entry(site, user, passwd, idEntry, id_list);
 
 			}
 
@@ -152,7 +153,7 @@ public class EntriesInMemory implements EntryRepository {
 			PreparedStatement preparedStatement = conn.prepareStatement(queryDeleteEntry);
 			preparedStatement.setString(1, entry.getId().toString());
 			preparedStatement.executeUpdate();
-			
+
 		} catch (SQLException ex) {
 
 			ex.printStackTrace();
@@ -187,8 +188,6 @@ public class EntriesInMemory implements EntryRepository {
 	@Override
 	public void deleteMultipleEntries(List<Entry> entries, EntryList entryList) {
 		try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);) {
-			
-			
 
 		} catch (SQLException ex) {
 			ex.printStackTrace();
@@ -213,8 +212,24 @@ public class EntriesInMemory implements EntryRepository {
 	}
 
 	@Override
-	public void modifyEntry(Entry entry, EntryList entryList) {
-		// TODO Auto-generated method stub
+	public void modifyEntry(Entry entry) {
+
+		try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWD);) {
+
+			String queryUpdateEntry = "UPDATE entry " + "SET " + " site = ? ," + "username = ? ," + "password = ? "
+					+ "WHERE id_entry = ?";
+
+			PreparedStatement preparedStatement = conn.prepareStatement(queryUpdateEntry);
+
+			preparedStatement.setString(1, entry.getSite());
+			preparedStatement.setString(2, entry.getUser());
+			preparedStatement.setString(3, entry.getPassword());
+			preparedStatement.setString(4, entry.getId().toString());
+			preparedStatement.executeUpdate();
+
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		}
 
 	}
 

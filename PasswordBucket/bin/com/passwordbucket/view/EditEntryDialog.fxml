@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="352.0" prefWidth="683.0" styleClass="background" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.passwordbucket.view.EditEntryDialogController">
+<AnchorPane prefHeight="393.0" prefWidth="802.0" styleClass="background" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.passwordbucket.view.EditEntryDialogController">
    <children>
       <AnchorPane layoutX="57.0">
          <children>
@@ -38,5 +38,6 @@
             </GridPane>
          </children>
       </AnchorPane>
+      <Label fx:id="passwordStrengthMeter" alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="686.0" layoutY="237.0" prefHeight="21.0" prefWidth="76.0" styleClass="label-bright" text="Label" />
    </children>
 </AnchorPane>
